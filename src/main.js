@@ -37,6 +37,7 @@ Vue.config.productionTip = false
 
 new Vue({
   el: '#app',
+  // 路由注入vue实例中
   router,
   store,
   render: h => h(App)

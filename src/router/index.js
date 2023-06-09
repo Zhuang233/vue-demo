@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+// 声明使用路由
 Vue.use(Router)
 
 /* Layout */
@@ -30,6 +31,7 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+// 路由规则
 export const constantRoutes = [
   {
     path: '/login',
@@ -167,9 +169,11 @@ export const constantRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
+  // 加入路由规则
   routes: constantRoutes
 })
 
+// 创建路由实例
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
@@ -178,4 +182,6 @@ export function resetRouter() {
   router.matcher = newRouter.matcher // reset router
 }
 
+// 默认导出router对象
 export default router
+
