@@ -36,7 +36,8 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    // mock:帮助开发人员在前端开发过程中快速生成模拟的数据，用于模拟后端接口的返回数据或填充前端页面的测试数据,现在不需要
+    // before: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
