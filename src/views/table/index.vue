@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <el-button type="primary" @click="addstudent">新增</el-button>
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -61,6 +62,9 @@
     :visible.sync="dialogVisible"
     width="50%">
       <el-form :model="form">
+        <el-form-item label="学号" :label-width="formLabelWidth">
+          <el-input v-model="form.studentno" autocomplete="off" ></el-input>
+        </el-form-item>
         <el-form-item label="姓名" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off" ></el-input>
         </el-form-item>
@@ -81,7 +85,7 @@
 </template>
 
 <script>
-import { getAllStudents,deleteStudents,updateStudents } from '@/api/student'
+import { addStudent,getAllStudents,deleteStudents,updateStudents } from '@/api/student'
 
 export default {
   // filters: {
@@ -121,6 +125,16 @@ export default {
         this.listLoading = false
       })
     },
+    addstudent(){
+      this.form = {
+          name: '',
+          gender: '',
+          age: '',
+          syudentno: ''
+        }
+      this.dialogVisible = true
+    }
+    ,
     handleEdit(index, row) {
       this.index_now = index
       this.form.name = row.name
@@ -129,9 +143,15 @@ export default {
       this.form.age = row.age
       this.dialogVisible = true
     },
-    sendEdit(){
-      this.list[this.index_now] = JSON.parse(JSON.stringify(this.form))
-      updateStudents(this.form)
+    sendEdit(is_new){
+      if(!is_new){
+        this.list[this.index_now] = JSON.parse(JSON.stringify(this.form))
+        updateStudents(this.form)
+      }
+      else{
+        addStudent(this.form)
+        this.fetchData()
+      }
       this.dialogVisible = false
     },
     handleDelete(index, row) {

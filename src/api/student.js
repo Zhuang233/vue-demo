@@ -23,3 +23,11 @@ export function updateStudents(params) {
     params
   })
 }
+
+export function addStudent(params) {
+  return request({
+    url: '/addStudent',
+    method: 'get',
+    params
+  })
+}
