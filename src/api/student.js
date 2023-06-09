@@ -15,3 +15,11 @@ export function deleteStudents(params) {
     params
   })
 }
+
+export function updateStudents(params) {
+  return request({
+    url: '/updateStudent',
+    method: 'get',
+    params
+  })
+}

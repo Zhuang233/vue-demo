@@ -40,6 +40,8 @@
         </template>
       </el-table-column>
 
+      
+
       <!-- <el-table-column class-name="status-col" label="Status" width="110" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
@@ -53,11 +55,33 @@
       </el-table-column>
     -->
     </el-table>
+
+    <el-dialog
+    title="修改学生信息"
+    :visible.sync="dialogVisible"
+    width="50%">
+      <el-form :model="form">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input v-model="form.name" autocomplete="off" ></el-input>
+        </el-form-item>
+        <el-form-item label="性别" :label-width="formLabelWidth">
+          <el-select v-model="form.gender" placeholder="请选择">
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="sendEdit">确 定</el-button>
+      </span>
+  </el-dialog>
   </div>
 </template>
 
 <script>
-import { getAllStudents,deleteStudents } from '@/api/student'
+import { getAllStudents,deleteStudents,updateStudents } from '@/api/student'
 
 export default {
   // filters: {
@@ -72,8 +96,17 @@ export default {
   // },
   data() {
     return {
+      dialogVisible:false,
+      index_now: 0,
       list: null,
-      listLoading: true
+      listLoading: true,
+      form: {
+          name: '',
+          gender: '',
+          age: '',
+          syudentno: ''
+        },
+        formLabelWidth: '120px'
     }
   },
   created() {
@@ -81,7 +114,6 @@ export default {
   },
   methods: {
     fetchData() {
-      console.log('hello')
       this.listLoading = true
       getAllStudents().then(response => {
         console.log(response)
@@ -90,8 +122,17 @@ export default {
       })
     },
     handleEdit(index, row) {
-      console.log(row);
-      console.log(index);
+      this.index_now = index
+      this.form.name = row.name
+      this.form.studentno = row.studentno
+      this.form.gender = row.gender
+      this.form.age = row.age
+      this.dialogVisible = true
+    },
+    sendEdit(){
+      this.list[this.index_now] = JSON.parse(JSON.stringify(this.form))
+      updateStudents(this.form)
+      this.dialogVisible = false
     },
     handleDelete(index, row) {
       //删去前端条目
