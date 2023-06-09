@@ -11,6 +11,7 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
+          <!-- 路由跳转 -->
           <router-link to="/">
             <el-dropdown-item>
               Home
